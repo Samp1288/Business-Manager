@@ -1,0 +1,12 @@
+{
+  "name": "Orbis Gestion",
+  "short_name": "Orbis Gestion",
+  "description": "Organisation locale des budgets, projets et soumissions.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f5f6f1",
+  "theme_color": "#173c34",
+  "lang": "fr-CA",
+  "orientation": "portrait-primary",
+  "icons": [{"src":"icon.svg?v=8","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}

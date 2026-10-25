@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Orbis Gestion</title>
+  <desc id="desc">Monogramme OG intégré à un graphique de gestion en progression</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#102e2b"/>
+      <stop offset="1" stop-color="#2b665a"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#b9df92"/>
+      <stop offset="1" stop-color="#f1d58c"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="124" fill="url(#bg)"/>
+  <circle cx="256" cy="257" r="148" fill="none" stroke="#ffffff" stroke-opacity=".1" stroke-width="10"/>
+  <path d="M126 360h260" fill="none" stroke="#ffffff" stroke-opacity=".16" stroke-width="8" stroke-linecap="round"/>
+  <path d="M137 332c28-9 49-39 75-35 31 5 34 27 62 3 28-24 43-76 101-97" fill="none" stroke="url(#line)" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m350 198 25 5-7 24" fill="none" stroke="#f1d58c" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="137" cy="332" r="10" fill="#b9df92"/>
+  <rect x="292" y="48" width="150" height="78" rx="39" fill="#f5f6f1"/>
+  <text x="367" y="98" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="34" font-weight="800" letter-spacing="1" fill="#173c34">OG</text>
+</svg>
