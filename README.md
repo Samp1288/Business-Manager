@@ -6,7 +6,8 @@ Simplixion est une application web progressive locale et hors ligne pour gérer 
 
 - Tableau de bord global ou filtré par projet.
 - Projets avec statut modifiable directement depuis la carte.
-- Soumissions liées à un projet avec lignes détaillées, taxes, conditions et échéancier de paiement.
+- Soumissions liées à un projet avec lignes détaillées, taxes et échéancier de paiement calculé automatiquement par pourcentage.
+- Les paiements d’une soumission acceptée deviennent des revenus planifiés; chaque paiement marqué « Payé » devient automatiquement un revenu reçu du projet, sans double saisie.
 - Transactions classées par projet, client ou fournisseur, référence, mode de paiement, taxes et déductibilité.
 - Revenus et dépenses réels séparés des opérations prévues.
 - Récurrences hebdomadaires, aux deux semaines et mensuelles.
@@ -25,7 +26,9 @@ Le navigateur ne permet pas à une application web de modifier silencieusement n
 1. Export/import XLSX complet, compatible avec tous les navigateurs modernes.
 2. Dans un navigateur compatible, « Choisir le fichier maître » puis « Enregistrer dans Excel » pour réécrire le fichier sélectionné. L’autorisation du navigateur est nécessaire et le fichier doit être sélectionné à nouveau si elle expire.
 
-Le classeur contient les feuilles Projects, Transactions, Budgets, Recurring, Estimates, EstimateItems, EstimatePayments et Accounting.
+Le classeur contient les feuilles Projects, Transactions, Budgets, Recurring, Estimates, EstimateItems, EstimatePayments, Accounting, Company et EstimateTemplates. Les données de marque et les modèles sont donc exportables, mais le logo demeure géré dans Simplixion pour éviter de transformer le fichier Excel en dépôt d’images.
+
+Le fonctionnement recommandé est : Simplixion sert de registre principal; « Exporter vers Excel » produit une copie complète pour la comptabilité et l’analyse; « Importer un fichier Excel » réintègre les modifications de données. « Choisir le fichier maître » puis « Enregistrer dans Excel » permet de réécrire le même fichier lorsque le navigateur le permet. Une synchronisation silencieuse et universelle avec un fichier local n’est pas possible pour une webapp, car le navigateur exige une autorisation explicite pour modifier un fichier de l’ordinateur.
 
 ## Déploiement Cloudflare Pages
 
@@ -39,7 +42,7 @@ Le classeur contient les feuilles Projects, Transactions, Budgets, Recurring, Es
 5. Clique **Save and Deploy**.
 6. Après chaque nouvelle modification, envoie les fichiers sur GitHub; Cloudflare redéploie automatiquement.
 
-Le service worker utilise le cache `simplixion-v11-static`. Si un ancien écran reste affiché, recharge la page; si nécessaire, ouvre l’application en navigation privée ou vide les données du site une seule fois.
+Le service worker utilise le cache `simplixion-v13-static`. Si un ancien écran reste affiché, recharge la page; si nécessaire, ouvre l’application en navigation privée ou vide les données du site une seule fois.
 
 ## Données et synchronisation
 
