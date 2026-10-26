@@ -1,72 +1,57 @@
-# Orbis Gestion
+# Simplixion
 
-Plateforme locale d’organisation financière et de projets, sans compte obligatoire ni courriel. Elle regroupe les budgets, transactions, récurrences, soumissions et estimations dans des projets indépendants.
+Simplixion est une application web progressive locale et hors ligne pour gérer une entreprise : projets, soumissions, échéanciers de paiement, transactions, récurrences, suivi comptable annuel et exports.
 
-## Version 8.0
+## Fonctionnalités
 
-- Bouton Français / English, mémorisé sur chaque appareil.
-- Chaque ouverture sur un nouvel appareil commence avec un espace local indépendant.
-- Le lien public ne contient aucun budget partagé. La synchronisation ne commence qu’après l’import volontaire d’un code d’association.
-- Les projets isolent les transactions, budgets, récurrences et soumissions d’un dossier à l’autre.
-- Les soumissions et estimations contiennent un numéro, un client, un statut, des lignes, les taxes et un total.
-- Échange Excel hors ligne : export d’un classeur `.xlsx` complet et import d’un classeur Excel ou d’un `.csv` de transactions.
-- Méthode de budget à base zéro : revenus prévus, montants affectés par catégorie, montant restant à affecter, comparaison prévu/réel.
-- Budgets et récurrences hebdomadaires, aux deux semaines ou mensuels.
-- Une opération est soit prévue, soit payée/reçue, avec un bouton de changement rapide dans les listes.
-- Catégories initiales réduites à Salaire net et cinq catégories de dépenses; les catégories personnelles sont ajoutables et mémorisées.
-- Répartition avec pourcentage par catégorie, thème clair/sombre et affichage adapté à l’ordinateur, à la tablette et au téléphone.
+- Tableau de bord global ou filtré par projet.
+- Projets avec statut modifiable directement depuis la carte.
+- Soumissions liées à un projet avec lignes détaillées, taxes, conditions et échéancier de paiement.
+- Transactions classées par projet, client ou fournisseur, référence, mode de paiement, taxes et déductibilité.
+- Revenus et dépenses réels séparés des opérations prévues.
+- Récurrences hebdomadaires, aux deux semaines et mensuelles.
+- Rapport comptable annuel : revenus hors taxes, dépenses déductibles, résultat, taxes perçues/payées, catégories et vue mensuelle.
+- Catégories personnalisées pour revenus et dépenses.
+- Sauvegarde locale automatique, mode hors ligne, synchronisation anonyme optionnelle et export JSON/CSV/XLSX.
+- Fichier Excel maître : import/export partout; écriture directe dans un fichier sélectionné lorsque le navigateur prend en charge File System Access API.
+- Interface responsive ordinateur, tablette et mobile, thème clair/sombre et français/anglais.
 
-## Fonctionnement
+## Excel
 
-- Les données sont d’abord enregistrées dans IndexedDB sur l’appareil.
-- L’application fonctionne hors ligne grâce au service worker.
-- La synchronisation entre appareils est facultative et se fait avec un code d’association.
-- Les données envoyées au serveur sont chiffrées dans le navigateur avant leur envoi.
-- Le serveur ne reçoit pas les montants lisibles.
-- Les transactions héritées de l’ancienne version `localStorage` `budget-alexis-v1` sont importées automatiquement à la première ouverture.
-- Une mise à jour conserve la base IndexedDB existante et migre automatiquement les données vers le modèle avec projets et soumissions.
+Le navigateur ne permet pas à une application web de modifier silencieusement n’importe quel fichier Excel. Simplixion fournit donc deux niveaux :
 
-## Règle d’isolation des budgets
+1. Export/import XLSX complet, compatible avec tous les navigateurs modernes.
+2. Dans un navigateur compatible, « Choisir le fichier maître » puis « Enregistrer dans Excel » pour réécrire le fichier sélectionné. L’autorisation du navigateur est nécessaire et le fichier doit être sélectionné à nouveau si elle expire.
 
-Deux personnes qui ouvrent le lien sur deux appareils ou deux navigateurs différents commencent avec deux espaces locaux différents. Pour utiliser les mêmes données sur plusieurs appareils, il faut importer le code d’association; ce code ne doit pas être partagé publiquement. Si deux personnes utilisent le même navigateur, elles doivent utiliser des profils de navigateur distincts.
+Le classeur contient les feuilles Projects, Transactions, Budgets, Recurring, Estimates, EstimateItems, EstimatePayments et Accounting.
 
-## Échange Excel
+## Déploiement Cloudflare Pages
 
-Dans Réglages, « Exporter vers Excel » produit un classeur avec les feuilles Projects, Transactions, Budgets, Recurring, Estimates et EstimateItems. « Importer un fichier Excel » ajoute les données au contenu existant; les identifiants de projet permettent de conserver la segmentation.
+1. Mets le contenu de ce dossier à la racine du dépôt GitHub `Samp1288/Business-Manager`.
+2. Dans Cloudflare, ouvre **Workers & Pages** puis **Create application** → **Pages** → **Connect to Git**.
+3. Sélectionne le dépôt `Business-Manager`, la branche `main`, et configure :
+   - commande de compilation : vide;
+   - dossier de sortie : `.`;
+   - racine : `/`.
+4. Donne au projet le nom `business-manager` ou `simplixion` si Cloudflare l’accepte.
+5. Clique **Save and Deploy**.
+6. Après chaque nouvelle modification, envoie les fichiers sur GitHub; Cloudflare redéploie automatiquement.
 
-L’application ne peut pas surveiller automatiquement un fichier Excel local après sa sélection. Pour une synchronisation en temps réel avec un fichier OneDrive ou SharePoint, une intégration Microsoft séparée serait nécessaire.
+Le service worker utilise le cache `simplixion-v10-static`. Si un ancien écran reste affiché, ouvre l’application en navigation privée ou vide les données du site une seule fois, puis recharge.
 
-## Utilisation locale
+## Données et synchronisation
 
-Un serveur HTTPS ou localhost est nécessaire pour IndexedDB, le service worker et les notifications. Dans le dossier `budget-pro`, utilise par exemple :
+Par défaut, les données restent dans le navigateur et sont enregistrées automatiquement, sans compte ni connexion. Pour synchroniser plusieurs appareils, configure une API Cloudflare Workers compatible dans `config.js`, puis redéploie. Sans API, l’app reste entièrement utilisable hors ligne.
 
-```bash
-python3 -m http.server 8080
-```
+## Comptabilité et impôts
 
-Puis ouvre `http://localhost:8080`.
+Le module prépare un registre et des exports utiles pour la fin d’année, mais ne remplace pas un logiciel de production de déclarations ni la validation d’un comptable. Les taux de taxes sont configurables par entreprise et doivent être vérifiés selon la province, le type de vente, les exemptions, les dépenses admissibles et les règles applicables. Conserve les factures et reçus originaux.
 
-## Déploiement de l’interface
+## Structure technique
 
-1. Créer un dépôt GitHub privé ou public.
-2. Copier le contenu de `budget-pro` à la racine du dépôt.
-3. Créer un projet Cloudflare Pages connecté au dépôt.
-4. Choisir « Direct Upload » ou l’intégration Git.
-5. Laisser la commande de build vide et utiliser le dossier racine comme dossier de sortie.
-6. L’application sera disponible sur une adresse `pages.dev` gratuite.
-
-Pour un usage uniquement sur un appareil, laisser `API_BASE_URL` vide dans `config.js`.
-
-## Déploiement de la synchronisation
-
-Le dossier `sync-api` contient une API Cloudflare Worker et une base D1. Les étapes détaillées sont dans `sync-api/README.md`.
-
-Après avoir déployé l’API, remplacer `API_BASE_URL` dans `config.js` par l’URL Worker, puis redéployer Pages.
-
-## Limites importantes
-
-- Sans API, les données restent sur l’appareil.
-- Pour associer un autre appareil, l’appareil initial doit afficher le code d’association.
-- La perte du code d’association signifie qu’un nouvel appareil ne peut pas récupérer les données existantes.
-- Les notifications du navigateur nécessitent une permission et ne remplacent pas une application native.
-- Un export JSON régulier est recommandé.
+- `index.html` : interface et formulaires.
+- `styles.css` : design responsive et thèmes.
+- `app.js` : logique, stockage local, comptabilité et synchronisation.
+- `excel.js` : lecture/écriture XLSX sans service externe.
+- `sw.js` : mode hors ligne et cache PWA.
+- `manifest.webmanifest` et `icon-simplixion.png` : installation mobile et identité Simplixion.

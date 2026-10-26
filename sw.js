@@ -1,5 +1,5 @@
-const CACHE_NAME = "orbis-gestion-v8-static";
-const APP_SHELL = ["./", "./index.html", "./styles.css?v=8", "./app.js?v=8", "./excel.js?v=8", "./config.js?v=8", "./manifest.webmanifest", "./icon.svg?v=8"];
+const CACHE_NAME = "simplixion-v10-static";
+const APP_SHELL = ["./", "./index.html", "./styles.css?v=10", "./app.js?v=10", "./excel.js?v=10", "./config.js?v=10", "./manifest.webmanifest", "./icon-simplixion.png?v=10"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)).then(() => self.skipWaiting()));
