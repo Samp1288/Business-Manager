@@ -14,7 +14,9 @@ Simplixion est une application web progressive locale et hors ligne pour gérer 
 - Catégories personnalisées pour revenus et dépenses.
 - Sauvegarde locale automatique, mode hors ligne, synchronisation anonyme optionnelle et export JSON/CSV/XLSX.
 - Fichier Excel maître : import/export partout; écriture directe dans un fichier sélectionné lorsque le navigateur prend en charge File System Access API.
-- Interface responsive ordinateur, tablette et mobile, thème clair/sombre et français/anglais.
+- Interface responsive ordinateur, tablette et mobile, thèmes clair, bleu doux et sombre, et français/anglais.
+- Catégories de revenus et de dépenses entièrement personnalisables : ajout et suppression possibles, avec conservation des anciennes transactions.
+- Soumissions avec lignes détaillées quantité × prix unitaire, TPS/TVQ du Québec proposées par défaut, choix sans taxe ou autre régime, échéancier libellé et impression client vers PDF.
 
 ## Excel
 
@@ -37,7 +39,7 @@ Le classeur contient les feuilles Projects, Transactions, Budgets, Recurring, Es
 5. Clique **Save and Deploy**.
 6. Après chaque nouvelle modification, envoie les fichiers sur GitHub; Cloudflare redéploie automatiquement.
 
-Le service worker utilise le cache `simplixion-v10-static`. Si un ancien écran reste affiché, ouvre l’application en navigation privée ou vide les données du site une seule fois, puis recharge.
+Le service worker utilise le cache `simplixion-v11-static`. Si un ancien écran reste affiché, recharge la page; si nécessaire, ouvre l’application en navigation privée ou vide les données du site une seule fois.
 
 ## Données et synchronisation
 

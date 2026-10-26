@@ -3,5 +3,5 @@
    Laisser vide garde l’application 100 % locale. */
 window.AP_BUDGET_CONFIG = Object.freeze({
   API_BASE_URL: "",
-  APP_VERSION: "10.0.0"
+  APP_VERSION: "11.0.0"
 });
